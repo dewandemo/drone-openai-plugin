@@ -1,0 +1,12 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: openai-check
+    image: local/drone-openai-plugin:dev
+    settings:
+      model: gpt-4o-mini
+      prompt: "Hello from Drone pipeline"
+      api_key:
+        from_secret: openai_api_key
