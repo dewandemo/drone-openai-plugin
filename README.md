@@ -73,7 +73,7 @@ steps:
 
 ## Building the Plugin
 
-### Local Build
+### Quick Start with Makefile (Recommended)
 
 ```bash
 # Clone the repository
@@ -81,13 +81,25 @@ git clone https://github.com/yourusername/drone-openai-plugin.git
 cd drone-openai-plugin
 
 # Build the binary
-go build -o drone-openai-plugin .
+make build
+
+# Run locally for testing
+make run API_KEY="your-api-key" PROMPT="Test prompt"
+```
+
+### Manual Build
+
+```bash
+# Build the binary
+go build -o drone-openai-plugin ./cmd/plugin
 
 # Run locally for testing
 export PLUGIN_API_KEY="your-api-key"
 export PLUGIN_PROMPT="Test prompt"
 ./drone-openai-plugin
 ```
+
+See [LOCAL_TESTING.md](./LOCAL_TESTING.md) for comprehensive testing guide.
 
 ### Docker Build
 
