@@ -46,8 +46,8 @@ clean:
 
 # Build Docker image
 docker-build:
-	@echo "Building Docker image..."
-	@docker build -t drone-openai-plugin:latest .
+	@echo "Building Docker image for linux/amd64..."
+	@docker build --platform linux/amd64 -t drone-openai-plugin:latest .
 	@echo "Docker image built: drone-openai-plugin:latest"
 
 # Run the plugin locally (for testing)

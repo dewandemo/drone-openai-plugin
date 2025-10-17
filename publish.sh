@@ -78,6 +78,7 @@ echo -e "${BLUE}Step 1/4: Building Docker image...${NC}"
 echo -e "${BLUE}═══════════════════════════════════════════${NC}"
 
 docker build \
+    --platform linux/amd64 \
     -t ${DOCKER_USERNAME}/${IMAGE_NAME}:latest \
     -t ${DOCKER_USERNAME}/${IMAGE_NAME}:${VERSION} \
     .

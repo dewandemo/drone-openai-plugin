@@ -20,7 +20,17 @@ func Run() error {
 		Level: slog.LevelInfo,
 	}))
 
-	logger.Info("starting drone openai plugin")
+	logger.Info("=== Drone OpenAI Plugin Starting ===",
+		"version", "0.1.2",
+		"go_arch", os.Getenv("GOOS")+"/"+os.Getenv("GOARCH"),
+	)
+	
+	// Log environment for debugging
+	logger.Info("runtime environment",
+		"workspace", os.Getenv("DRONE_WORKSPACE"),
+		"repo", os.Getenv("DRONE_REPO"),
+		"commit", os.Getenv("DRONE_COMMIT_SHA"),
+	)
 
 	// Load configuration from environment
 	cfg := config.Load()
