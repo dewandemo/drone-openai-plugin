@@ -1,0 +1,123 @@
+pipeline:
+  name: OpenAI Plugin Demo Pipeline
+  identifier: openai_plugin_demo
+  projectIdentifier: default
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: account.github
+        repoName: drone-openai-plugin
+        build: <+input>
+  stages:
+    - stage:
+        name: AI Code Analysis
+        identifier: ai_code_analysis
+        description: Demonstrate OpenAI plugin capabilities
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              # Example 1: Simple AI Query
+              - step:
+                  type: Plugin
+                  name: Simple AI Query
+                  identifier: simple_ai_query
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: yourusername/drone-openai-plugin:latest
+                    settings:
+                      api_key: <+secrets.getValue("openai_api_key")>
+                      prompt: "Explain what a Drone plugin is in one sentence"
+                      model: gpt-4o-mini
+
+              # Example 2: Code Review
+              - step:
+                  type: Plugin
+                  name: Code Review with AI
+                  identifier: code_review_ai
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: yourusername/drone-openai-plugin:latest
+                    settings:
+                      api_key: <+secrets.getValue("openai_api_key")>
+                      prompt: "Review this Go code for security issues, bugs, and best practices. Provide specific recommendations."
+                      file: internal/openai/client.go
+                      model: gpt-4o-mini
+                      output_file: security-review.txt
+                      temperature: "0.3"
+                      max_tokens: "2000"
+
+              # Example 3: Generate Documentation
+              - step:
+                  type: Plugin
+                  name: Generate API Documentation
+                  identifier: generate_docs
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: yourusername/drone-openai-plugin:latest
+                    settings:
+                      api_key: <+secrets.getValue("openai_api_key")>
+                      system_prompt: "You are a technical writer who creates clear, concise documentation."
+                      prompt: "Generate user-friendly API documentation for this code. Include usage examples."
+                      file: pkg/plugin/plugin.go
+                      output_file: api-docs.md
+                      model: gpt-4o-mini
+                      temperature: "0.5"
+
+              # Example 4: Architecture Diagram Analysis (with image)
+              - step:
+                  type: Plugin
+                  name: Analyze Architecture Diagram
+                  identifier: analyze_diagram
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: yourusername/drone-openai-plugin:latest
+                    settings:
+                      api_key: <+secrets.getValue("openai_api_key")>
+                      prompt: "Analyze this architecture diagram and identify potential improvements or concerns."
+                      file: docs/architecture.png
+                      model: gpt-4o ## Vision-capable model for images
+                      output_file: architecture-analysis.txt
+
+              # Example 5: Generate Test Cases
+              - step:
+                  type: Plugin
+                  name: Generate Test Cases
+                  identifier: generate_tests
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: yourusername/drone-openai-plugin:latest
+                    settings:
+                      api_key: <+secrets.getValue("openai_api_key")>
+                      system_prompt: "You are an expert Go developer focused on comprehensive testing."
+                      prompt: "Generate additional edge case tests for this Go code. Focus on error handling and boundary conditions."
+                      file: internal/config/config.go
+                      output_file: suggested-tests.go
+                      model: gpt-4o-mini
+                      max_tokens: "3000"
+
+              # Example 6: Commit Message Analysis
+              - step:
+                  type: Plugin
+                  name: Analyze Commit Quality
+                  identifier: analyze_commits
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: yourusername/drone-openai-plugin:latest
+                    settings:
+                      api_key: <+secrets.getValue("openai_api_key")>
+                      prompt: "Analyze the quality of this commit message and suggest improvements following conventional commits format: <+codebase.commitMessage>"
+                      model: gpt-4o-mini
+                      temperature: "0.2"
+
+          caching:
+            enabled: false

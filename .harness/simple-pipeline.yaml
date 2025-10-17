@@ -1,0 +1,30 @@
+pipeline:
+  name: OpenAI Code Review
+  identifier: openai_code_review
+  projectIdentifier: default
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: AI Code Review
+        identifier: ai_code_review
+        type: CI
+        spec:
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  type: Plugin
+                  name: Review Pull Request
+                  identifier: review_pr
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: yourusername/drone-openai-plugin:latest
+                    settings:
+                      api_key: <+secrets.getValue("openai_api_key")>
+                      prompt: "Review this code for bugs, security issues, and best practices"
+                      file: <+input> ## Specify file at runtime
+                      model: gpt-4o-mini
+                      output_file: review-results.txt
+                      temperature: "0.3"
+                      max_tokens: "2000"
