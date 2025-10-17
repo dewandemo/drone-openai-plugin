@@ -35,10 +35,15 @@ Thumbs.db
 .env.local
 
 # Output files from testing
-*.txt
-*.md
 output/
 results/
+coverage.html
+coverage.out
+
+# Keep documentation files but ignore test outputs
+!README.md
+!LICENSE
+*.md
 
 # Docker
 .dockerignore

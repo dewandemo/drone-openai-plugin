@@ -1,8 +1,14 @@
 module github.com/dewan-ahmed/drone-openai-plugin
 
-go 1.21
+go 1.22
+
+toolchain go1.23.0
+
+require github.com/openai/openai-go/v3 v3.5.0
 
 require (
-	// No external dependencies needed for this basic implementation
-	// Add dependencies here as needed
+	github.com/tidwall/gjson v1.14.4 // indirect
+	github.com/tidwall/match v1.1.1 // indirect
+	github.com/tidwall/pretty v1.2.1 // indirect
+	github.com/tidwall/sjson v1.2.5 // indirect
 )
