@@ -22,8 +22,7 @@ steps:
     settings:
       api_key:
         from_secret: openai_api_key
-      prompt: "Analyze this code for improvements"
-      file: main.py
+      prompt: "What are best practices for writing secure Go code?"
 ```
 
 ### Full Configuration
